@@ -1,0 +1,6 @@
+MainServer: false
+Redis:
+  Host: "127.0.0.1"
+  Port: 6379
+  Username: "user"
+  Password: "password"

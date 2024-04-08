@@ -1,0 +1,14 @@
+name: RedisChatBridge
+version: '${project.version}'
+main: thedavid.redischatbridge.Main
+api-version: '1.20'
+depend:
+  - Vault
+  - InteractiveChat
+softdepend:
+  - DiscordSRV
+commands:
+  sync:
+    description: Synchronize commands to proxy
+    usage: /sync <command>
+    permission: redischatbridge.sync
