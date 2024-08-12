@@ -1,7 +1,6 @@
 package thedavid.redischatbridge.Handler;
 
 import github.scarsz.discordsrv.DiscordSRV;
-import github.scarsz.discordsrv.dependencies.jda.api.entities.TextChannel;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -18,14 +17,14 @@ public class EventListener implements org.bukkit.event.Listener{
 	public EventListener(Main plugin){
 		this.plugin = plugin;
 	}
-	@EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
 	public void onChat(AsyncChatEvent e){
 		e.setCancelled(true);
 		String messagePlainString = PlainTextComponentSerializer.plainText().serialize(e.message());
 		if(messagePlainString.isEmpty()){
 			return;
 		}
-		Component prefixcomponent = LegacyComponentSerializer.legacyAmpersand().deserialize(Main.chat.getPlayerPrefix(e.getPlayer()));
+		Component prefixcomponent = LegacyComponentSerializer.legacy('&').deserialize(Main.chat.getPlayerPrefix(e.getPlayer()));
 		Component fullMessageComponent = Component.text()
 				.append(prefixcomponent)
 				.append(e.getPlayer().displayName())

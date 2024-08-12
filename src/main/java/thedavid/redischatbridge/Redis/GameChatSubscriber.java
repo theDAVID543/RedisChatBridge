@@ -2,7 +2,6 @@ package thedavid.redischatbridge.Redis;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
-import org.bukkit.Bukkit;
 import redis.clients.jedis.JedisPubSub;
 import thedavid.redischatbridge.Main;
 import thedavid.redischatbridge.RedisChatBridgeAPI;

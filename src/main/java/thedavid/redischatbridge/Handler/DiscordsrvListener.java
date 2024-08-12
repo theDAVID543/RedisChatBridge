@@ -9,13 +9,11 @@ import github.scarsz.discordsrv.dependencies.jda.api.events.channel.text.update.
 import github.scarsz.discordsrv.util.DiscordUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import thedavid.redischatbridge.Main;
-import thedavid.redischatbridge.Redis.Publisher;
 
 import java.util.Map;
 import java.util.UUID;
@@ -27,7 +25,7 @@ public class DiscordsrvListener{
 	}
 	@Subscribe(priority = ListenerPriority.MONITOR)
 	public void discordMessageReceived(DiscordGuildMessageReceivedEvent e){
-		if(e.getAuthor().isBot()){
+		if(e.getAuthor().isBot() || e.getChannel() != DiscordSRV.getPlugin().getDestinationTextChannelForGameChannelName("sync")){
 			return;
 		}
 		Map<String, UUID> link = DiscordSRV.getPlugin().getAccountLinkManager().getLinkedAccounts();
@@ -37,7 +35,7 @@ public class DiscordsrvListener{
 		Component fullMessageComponent = Component.text()
 				.append(Component.text("[DC]").color(NamedTextColor.BLUE)).build();
 		if(onlinePlayer != null){
-			Component prefixcomponent = LegacyComponentSerializer.legacyAmpersand().deserialize(Main.chat.getPlayerPrefix(onlinePlayer));
+			Component prefixcomponent = LegacyComponentSerializer.legacy('&').deserialize(Main.chat.getPlayerPrefix(onlinePlayer));
 			fullMessageComponent = fullMessageComponent
 					.append(prefixcomponent)
 					.append(onlinePlayer.displayName())
@@ -55,10 +53,10 @@ public class DiscordsrvListener{
 	}
 	@Subscribe
 	public void discordMessageProcessed(DiscordGuildMessagePostProcessEvent event) {
-		if(event.getAuthor().isBot()){
+//		if(event.getAuthor().isBot()){
 			event.setCancelled(true);
 //			Bukkit.getLogger().info("cancelled bot message");
-		}
+//		}
 	}
 	@Subscribe
 	public void discordChannelTopicUpdate(TextChannelUpdateTopicEvent e){
